@@ -1,22 +1,29 @@
 import ContactForm from "./ContactForm/ContactForm";
 import ContactList from "./ContactList/ContactList";
 import SearchBox from "./SearchBox/SearchBox";
-import { selectContacts } from "../redux/contactsSlice";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { selectLoading } from "../redux/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchContacts } from "../services/contactsOps";
 import css from "./app.module.css";
 
 const App = () => {
-  const contactsFromState = useSelector(selectContacts);
+  const isLoading = useSelector(selectLoading);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <div>
       <h1 className={css.primaryTitle}>Phonebook</h1>
       <ContactForm />
       <SearchBox />
-      {contactsFromState.contacts.length !== 0 ? (
-        <ContactList />
+      {isLoading ? (
+        <div className={css.loader}>Loading your contacts...</div>
       ) : (
-        <p className={css.messageList}>No records found yet!</p>
+        <ContactList />
       )}
     </div>
   );

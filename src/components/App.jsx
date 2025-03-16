@@ -4,7 +4,7 @@ import SearchBox from "./SearchBox/SearchBox";
 import { useEffect } from "react";
 import { selectLoading } from "../redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchContacts } from "../services/contactsOps";
+import { fetchContacts } from "../redux/contactsOps";
 import css from "./app.module.css";
 
 const App = () => {
